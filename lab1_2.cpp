@@ -2,7 +2,18 @@
 #include <ctime>
 
 using namespace std;
-#define MAX 3
+#define MAX 900
+
+void reSet(int (&A)[MAX][MAX], int (&B)[MAX][MAX], int (&matrix)[MAX][MAX]){
+	for(int i=0;i<MAX;i++){
+		for(int j=0;j<MAX;j++){
+			A[i][j]=j+1;
+			B[i][j]=MAX-j;
+			matrix[i][j]=0;
+		}
+	}
+
+}
 
 void multplyMatrices(int (&A)[MAX][MAX], int (&B)[MAX][MAX], int (&matrix)[MAX][MAX]){
 //void Mult(int A[][MAX], int B[][MAX], int matrix[][MAX]){
@@ -27,9 +38,26 @@ void showMatrix(int (&MATRIX)[MAX][MAX]){
 	
 }
 
+void blockMultiplyMatrices(int (&A)[MAX][MAX], int (&B)[MAX][MAX], int (&matrix)[MAX][MAX], int blockSize){
+	int i,j,k,ii,jj,kk;
+	for(i = 0 ; i < MAX ; i +=blockSize){
+		for(j = 0 ; j < MAX ; j += blockSize){
+			for(k = 0 ; k < MAX ; k += blockSize){
+				for(ii = i ; ii < i + blockSize ; ii++){
+					for(jj = j ; jj < j + blockSize ; jj++){
+						for(kk = k ; kk < k + blockSize ; kk++){
+							matrix[ii][jj] += A[ii][kk] * B[kk][jj];
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 int main(){
 	int A[MAX][MAX], B[MAX][MAX], matrix[MAX][MAX];
-
+	/*
 	for(int i=0;i<MAX;i++){
 		for(int j=0;j<MAX;j++){
 			A[i][j]=j;
@@ -37,15 +65,27 @@ int main(){
 			matrix[i][j]=0;
 		}
 	}
+	*/
+	reSet(A,B,matrix);
+	clock_t start, start2;
+
 ///////////////////////////////////////////////
-	showMatrix(A);
-	showMatrix(B);
-	showMatrix(matrix);
-
+//	showMatrix(A);
+//	showMatrix(B);
+//	showMatrix(matrix);
+	cout<<"********************************************"<<endl;
+	//start = clock();
 	multplyMatrices(A,B,matrix);
-
-	showMatrix(matrix);
-
+	//cout<<"time: "<<clock() - start / (double)(CLOCKS_PER_SEC / 1000) << "ms" << endl;
+	//showMatrix(matrix);
+	/*
+	cout<<"********************************************"<<endl;
+	reSet(A,B,matrix);
+	start2 = clock();
+	blockMultiplyMatrices(A,B,matrix,100);
+	cout<<"time: "<<clock() - start2 / (double)(CLOCKS_PER_SEC / 1000) << "ms" << endl;
+	//showMatrix(matrix);
+	*/
 
 	return 0;
 }
