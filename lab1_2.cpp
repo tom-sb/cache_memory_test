@@ -4,7 +4,7 @@
 using namespace std;
 #define MAX 3
 
-void Mult(int (&A)[MAX][MAX], int (&B)[MAX][MAX], int (&matrix)[MAX][MAX]){
+void multplyMatrices(int (&A)[MAX][MAX], int (&B)[MAX][MAX], int (&matrix)[MAX][MAX]){
 //void Mult(int A[][MAX], int B[][MAX], int matrix[][MAX]){
 	for(int i=0;i<MAX;i++){
 		for(int j=0;j<MAX;j++){
@@ -16,8 +16,20 @@ void Mult(int (&A)[MAX][MAX], int (&B)[MAX][MAX], int (&matrix)[MAX][MAX]){
 	}
 }
 
+void showMatrix(int (&MATRIX)[MAX][MAX]){
+	for(int i=0;i<MAX;i++){
+		for(int j=0;j<MAX;j++){
+			cout<<MATRIX[i][j]<<" ";
+		}
+		cout<<endl;
+	}
+	cout<<endl;
+	
+}
+
 int main(){
 	int A[MAX][MAX], B[MAX][MAX], matrix[MAX][MAX];
+
 	for(int i=0;i<MAX;i++){
 		for(int j=0;j<MAX;j++){
 			A[i][j]=j;
@@ -25,36 +37,15 @@ int main(){
 			matrix[i][j]=0;
 		}
 	}
+///////////////////////////////////////////////
+	showMatrix(A);
+	showMatrix(B);
+	showMatrix(matrix);
 
-	
-/*
-	for(int i=0;i<MAX;i++){
-		for(int j=0;j<MAX;j++){
-			cout<<A[i][j];
-		}
-		cout<<endl;
-	}
-	for(int i=0;i<MAX;i++){
-		for(int j=0;j<MAX;j++){
-			cout<<B[i][j];
-		}
-		cout<<endl;
-	}
-*/
-	for(int i=0;i<MAX;i++){
-		for(int j=0;j<MAX;j++){
-			cout<<matrix[i][j]<<" ";
-		}
-		cout<<endl;
-	}
-	cout<<"**************************************"<<endl;
-	Mult(A,B,matrix);
+	multplyMatrices(A,B,matrix);
 
-	for(int i=0;i<MAX;i++){
-		for(int j=0;j<MAX;j++){
-			cout<<matrix[i][j]<<" ";
-		}
-		cout<<endl;
-	}
+	showMatrix(matrix);
+
+
 	return 0;
 }
